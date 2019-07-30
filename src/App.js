@@ -6,6 +6,8 @@ import { ReactiveBase } from '@appbaseio/reactivesearch';
 import SelectedFilters from '@appbaseio/reactivesearch/lib/components/basic/SelectedFilters'
 import DataSearch from '@appbaseio/reactivesearch/lib/components/search/DataSearch'
 import {MultiList} from '@appbaseio/reactivesearch';
+import ItemCard from "./ItemCard";
+import Header from "./Header";
 
 import "normalize.css";
 import "@blueprintjs/core/lib/css/blueprint.css";
@@ -44,7 +46,7 @@ class App extends Component {
       {
         display_name: "Geo Latitude", // range field
         field: "geo.lat",
-        nested_field: "geo",
+        // nested_field: "geo",
       },
       {
         display_name: "Locations",
@@ -92,7 +94,7 @@ class App extends Component {
       {
         display_name: "People",
         field: "people.name.raw",
-        nested_field: "locations"
+        nested_field: "people"
       },
       {
         display_name: "People Occurance Count",
@@ -147,13 +149,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Header/>
         <FullSearch
           credentials="elastic"
           app="pdi-trec-dd-pdf"
           elasticsearchUrl="http://polar.usc.edu/elasticsearch"
           datafield={["organizations"]}
-          resultItem={res => {
-            return <pre>{JSON.stringify(res, null, 2)}</pre>;
+          resultItem={resultItem => {
+            // return <Card>{JSON.stringify(res, null, 2)}</Card>;
+            return <ItemCard result={resultItem}/>;
           }}
           searchCards={this.GetSearchCards()}
         />

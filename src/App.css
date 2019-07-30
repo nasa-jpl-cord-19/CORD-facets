@@ -31,3 +31,20 @@
     transform: rotate(360deg);
   }
 }
+
+/* Necessary overrides because of bootstrap */
+.multi-dropdown-list .multi-dropdown-list-title {
+  font-size: 16px;
+}
+
+.multi-dropdown-list .multi-dropdown-list-select {
+  font-size: 14px;
+}
+
+.multi-dropdown-list .multi-dropdown-list-list {
+  font-size: 14px;
+}
+
+.search-list .search-list-result-stats {
+  font-size: 12px;
+}
