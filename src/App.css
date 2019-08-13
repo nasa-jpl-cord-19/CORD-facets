@@ -1,5 +1,6 @@
 .App {
   /* text-align: center; */
+  text-align: inherit;
 }
 
 .App-logo {
@@ -47,4 +48,12 @@
 
 .search-list .search-list-result-stats {
   font-size: 12px;
+}
+
+/* table.bp3-html-table td {
+  padding: 5px;
+} */
+
+.search-list h3 a {
+  text-decoration: none;
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -37,8 +38,8 @@ function Header() {
             <li>
               <a href="/#!/config">Configure</a>
             </li>
-            <li class="active">
-              <a href="/facetview">Facet View</a>
+            <li className="active">
+              <Link to="/">Facet View</Link>
             </li>
           </ul>
         </div>
