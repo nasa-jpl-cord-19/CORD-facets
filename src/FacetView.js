@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FullSearch } from "superfacetsearchview-er";
+import { FullSearch } from "@iec1761/superfacetsearchview-er";
 import ItemCard from "./ItemCard";
 
 class FacetView extends Component {
