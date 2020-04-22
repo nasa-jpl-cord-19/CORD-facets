@@ -1,96 +1,78 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Collapse, HTMLTable } from "@blueprintjs/core";
+import { Button, Card, Collapse, HTMLTable, Intent, Callout, Divider } from "@blueprintjs/core";
 import { handleVal } from "./utils";
+import Highlight from 'react-highlighter';
 
 export default function ItemCard(props) {
-  const [otherFieldsIsOpen, setOtherFieldsIsOpen] = useState(false);
-  const [metadataIsOpen, setMetadataIsOpen] = useState(false);
+  console.log("props looks like")
+  console.log(props)
+  const [abstractIsOpen, setAbstractIsOpen] = useState(false);
+  const [pubInfoIsOpen, setPubInfoIsOpen] = useState(false);
 
-  function toggleExpandOtherFields() {
-    setOtherFieldsIsOpen(!otherFieldsIsOpen);
+  function toggleAbstract() {
+    setAbstractIsOpen( ! abstractIsOpen)
   }
 
-  function toggleMetadataFields() {
-    setMetadataIsOpen(!metadataIsOpen);
+  function togglePubInfo() {
+    setPubInfoIsOpen( ! pubInfoIsOpen)
   }
 
-  const { metadata: resultMetadata, ...resultWithoutMetadata } = props.result;
+const entities = [props.result.AnatomicalSiteMention, props.result.DiseaseDisorderMention]
+const searchTerm = document.getElementById("search-bar-downshift-input").value
+const pattern = new RegExp(searchTerm, "g");
+
   return (
-    <Card style={{ margin: "20px 0" }}>
-      <h3>
-        <Link to={{ pathname: "/result", state: { result: props.result } }}>
-          {resultMetadata
-            ? resultMetadata.title
-              ? resultMetadata.title
-              : <i>Document Title Missing</i>
-            : "no metadata"}
-        </Link>
-      </h3>
-      <Button onClick={toggleMetadataFields}>
-        {metadataIsOpen ? "Collapse Metadata" : "Expand for Metadata"}
-      </Button>
-      {/* <p>Metadata Fields:</p> */}
-      {/* <pre style={{overflow: "scroll"}}>{JSON.stringify(resultMetadata, null, 2)}</pre> */}
-      <Collapse isOpen={metadataIsOpen}>
-        <div style={{ overflow: "scroll" }}>
-          <HTMLTable>
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(resultMetadata).map(keyVal => {
-                // generate unique react key
-                let key = keyVal[0] + keyVal[1];
-                return (
-                  <tr key={key}>
-                    <td>
-                      <b>{keyVal[0]}</b>
-                    </td>
-                    <td>{keyVal[1]}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </HTMLTable>
-        </div>
+    <Card style={{ margin: "20px 0" }} className="bg-success">
+      <Callout style={{ marginBottom: "10px" }} intent={Intent.PRIMARY} icon={null}
+      title={props.result.title}>
+        <b>{"Journal: " + props.result.journal}</b>
+      </Callout>
+         <div>
+             <Button onClick={togglePubInfo} style={{ marginBottom: "10px" }} intent={Intent.PRIMARY} >
+                    {pubInfoIsOpen ? "Hide" : "Show"} Publication Info </Button>
+            <Collapse isOpen={pubInfoIsOpen} style={{display: "flex", flex: 1}}>
+                <h5>{"Source: " + props.result.source_x}</h5>
+                {
+                    props.result.publish_time ?
+                    <h5>{"Publication Date: " + props.result.publish_time}</h5>
+                    : null
+                }
+                <h5>{"Authors: " + props.result.authors}</h5>
+                <h5>{"DOI: "+ props.result.doi}</h5>
+                {
+                    props.result.pmcid ?
+                    <h5>{"PMC ID: "+ props.result.pmcid}</h5>
+                    : null
+                }
+                {
+                    props.result.pubmed_id ?
+                    <h5>{"PubMed ID: "+ props.result.pubmed_id}</h5>
+                    : null
+                }
+                {
+                    props.result["WHO #Covidence"] ?
+                    <h5>{"WHO #Covidence: " + props.result["WHO #Covidence"]}</h5>
+                    : null
+                }
+
+             </Collapse>
+            </div>
+
+          <Divider></Divider>
+
+      <div>
+        {abstractIsOpen ? null :
+            <p><Highlight search={searchTerm}>
+            {props.result.abstract.split(" ").slice(0,50).join(" ") + "..."}
+            </Highlight></p>
+            }
+      <Collapse isOpen={abstractIsOpen}>
+        <p><Highlight search={searchTerm}>{props.result.abstract}</Highlight></p>
       </Collapse>
-      <Button onClick={toggleExpandOtherFields} style={{ marginTop: "10px" }}>
-        {otherFieldsIsOpen
-          ? "Collapse Additional Fields"
-          : "Expand for Additional Fields"}
-      </Button>
-      <Collapse isOpen={otherFieldsIsOpen}>
-        <hr style={{ marginTop: "20px" }} />
-        {/* <pre style={{ height: "800px", overflow: "scroll" }}>{JSON.stringify(resultWithoutMetadata, null, 2)}</pre> */}
-        <div style={{ overflow: "scroll" }}>
-          <HTMLTable condensed={true} striped={true} bordered={true}>
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(resultWithoutMetadata).map(keyVal => {
-                // generate unique react key
-                let key = keyVal[0] + keyVal[1];
-                return (
-                  <tr key={key}>
-                    <td>
-                      <b>{keyVal[0]}</b>
-                    </td>
-                    <td>{handleVal(keyVal[1])}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </HTMLTable>
+      <Button onClick={toggleAbstract} intent={Intent.PRIMARY}>
+        {abstractIsOpen ? "Hide" : "Show"} Full Abstract </Button>
         </div>
-      </Collapse>
-    </Card>
+      </Card>
   );
 }
