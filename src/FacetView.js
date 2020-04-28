@@ -60,7 +60,7 @@ class FacetView extends Component {
         <FullSearch
           credentials={null}
           app="cord"
-          elasticsearchUrl="https://localhost:6443"
+          elasticsearchUrl="https://cord-facets.covid19data.space:443"
           dataField={["title", "abstract"]}
           resultItem={resultItem => {
              return <ItemCard result={resultItem} />;
