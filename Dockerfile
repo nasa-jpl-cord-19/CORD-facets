@@ -5,8 +5,8 @@ COPY ./ /home/node/app
 WORKDIR /home/node/app
 
 RUN npm install
-RUN npm audit fix
-RUN npm audit
+#RUN npm audit fix
+#RUN npm audit
 RUN npm run build
 
 
