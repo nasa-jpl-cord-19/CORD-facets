@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { FullSearch } from "@iec1761/superfacetsearchview-er";
 import ItemCard from "./ItemCard";
 
 import {
   Card
 } from "@blueprintjs/core";
+import {FullSearch} from "./SuperFacetViewer";
 
 class FacetView extends Component {
   GetSearchCards() {
@@ -55,12 +55,14 @@ class FacetView extends Component {
   }
 
   render() {
+    debugger;
     return (
       <div className="FacetView">
         <FullSearch
           credentials={null}
           app="cord"
-          elasticsearchUrl="https://cord-facets.covid19data.space:443"
+          //elasticsearchUrl="https://cord-facets.covid19data.space:443"
+          elasticsearchUrl="http://e6af1e9c.ngrok.io/"
           dataField={["title", "abstract"]}
           resultItem={resultItem => {
              return <ItemCard result={resultItem} />;

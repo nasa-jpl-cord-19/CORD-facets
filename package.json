@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@appbaseio/reactivesearch": "^3.7.10",
     "@blueprintjs/core": "^3.16.2",
     "@iec1761/superfacetsearchview-er": "^0.1.2",
     "react": "^16.8.6",
@@ -13,7 +14,7 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --inline=false",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
