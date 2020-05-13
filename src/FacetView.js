@@ -55,7 +55,6 @@ class FacetView extends Component {
   }
 
   render() {
-    debugger;
     return (
       <div className="FacetView">
         <FullSearch

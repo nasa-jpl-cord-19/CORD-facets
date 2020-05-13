@@ -5,7 +5,6 @@ import { handleVal } from "./utils";
 import Highlight from 'react-highlighter';
 
 export default function ItemCard(props) {
-    debugger;
   console.log("props looks like")
   console.log(props)
   const [abstractIsOpen, setAbstractIsOpen] = useState(false);
